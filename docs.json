@@ -26,71 +26,12 @@
     }
   },
   "navigation": {
-    "tabs": [
+    "products": [
       {
-        "tab": "Guide",
-        "groups": [
-          {
-            "group": "Get Started",
-            "pages": [
-              "introduction",
-              "quickstart",
-              "account-setup"
-            ]
-          },
-          {
-            "group": "Core Features",
-            "pages": [
-              "features/wardrobe",
-              "features/style-profiles",
-              "features/outfit-builder",
-              "features/recommendations"
-            ]
-          },
-          {
-            "group": "Integrations",
-            "pages": [
-              "integrations/overview",
-              "integrations/shopping",
-              "integrations/social"
-            ]
-          },
-          {
-            "group": "Account & Billing",
-            "pages": [
-              "account/plans",
-              "account/settings",
-              "account/privacy"
-            ]
-          },
-          {
-            "group": "Help",
-            "pages": [
-              "help/faq",
-              "help/troubleshooting"
-            ]
-          }
-        ]
-      },
-      {
-        "tab": "API Reference",
-        "groups": [
-          {
-            "group": "Overview",
-            "pages": [
-              "api-reference/introduction",
-              "api-reference/authentication"
-            ]
-          },
-          {
-            "group": "Endpoints",
-            "pages": [
-              "api-reference/wardrobe",
-              "api-reference/outfits",
-              "api-reference/recommendations",
-              "api-reference/users"
-            ]
-          }
+        "product": "ninestyle",
+        "description": "나인스타일을 소개합니다.",
+        "pages": [
+          "introduce"
         ]
       }
     ]
