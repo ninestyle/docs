@@ -1,0 +1,213 @@
+---
+title: "Fix Common NineStyle Issues and Errors"
+sidebarTitle: "Troubleshooting"
+description: "Resolve common NineStyle issues including login problems, photo upload errors, missing recommendations, sync failures, and integration connection issues."
+---
+
+Most NineStyle issues are quick to resolve once you know where to look. This guide walks you through the most common problems users encounter — organized by category — with clear, step-by-step fixes. Work through the relevant section below, and if the problem persists, reach out to our support team using the links at the bottom of this page.
+
+## Account & Login
+
+<AccordionGroup>
+  <Accordion title="I can't log in">
+    If you're unable to sign into NineStyle, work through the following checks:
+
+    <Steps>
+      <Step title="Confirm your email and password">
+        Make sure you're entering the email address associated with your NineStyle account. Passwords are case-sensitive, so double-check for typos.
+      </Step>
+      <Step title="Check Caps Lock">
+        Ensure Caps Lock is off on your keyboard. An accidentally activated Caps Lock is one of the most common causes of failed logins.
+      </Step>
+      <Step title="Reset your password">
+        If you're confident in your email but unsure of your password, click **Forgot Password** on the login page and follow the reset instructions sent to your inbox.
+      </Step>
+      <Step title="Try a different browser">
+        If the problem persists, open NineStyle in a different browser or an incognito/private window to rule out a browser extension or cached data issue.
+      </Step>
+    </Steps>
+  </Accordion>
+
+  <Accordion title="I didn't receive a verification email">
+    If your verification email hasn't arrived, try the following:
+
+    1. **Check your spam or junk folder** — automated emails from NineStyle are occasionally filtered by email providers.
+    2. **Wait up to 5 minutes** — delivery can be delayed depending on your email provider.
+    3. **Resend the verification email** — return to the NineStyle login page and click **Resend Verification Email**.
+
+    <Note>
+      If you still don't receive the email after resending, check that you registered with the correct address. You can create a new account with the correct email if needed.
+    </Note>
+  </Accordion>
+
+  <Accordion title="My account is locked">
+    NineStyle temporarily locks accounts after several consecutive failed login attempts as a security measure. Wait **15 minutes**, then try signing in again with the correct credentials.
+
+    If you'd rather not wait or believe the lockout is in error, contact our support team at [support@ninestyle.com](mailto:support@ninestyle.com) and we'll unlock your account manually after verifying your identity.
+  </Accordion>
+</AccordionGroup>
+
+## Wardrobe & Photos
+
+<AccordionGroup>
+  <Accordion title="My photo upload failed">
+    Photo uploads fail for one of two common reasons:
+
+    - **File format:** NineStyle only accepts **JPEG and PNG** files. Convert your image to one of these formats before uploading.
+    - **File size:** Images must be **under 10MB**. Use a free image compression tool to reduce the file size if needed.
+
+    If your file meets both requirements and the upload still fails, check your internet connection and try again. A weak or interrupted connection is the most frequent cause of upload errors.
+  </Accordion>
+
+  <Accordion title="An item I added is missing">
+    If an item you added doesn't appear in your wardrobe, try these steps:
+
+    <Steps>
+      <Step title="Verify your account">
+        Confirm you're signed into the same NineStyle account you used when you added the item. It's easy to accidentally have a second account under a different email address.
+      </Step>
+      <Step title="Refresh your wardrobe">
+        On mobile, pull down on the Wardrobe screen to trigger a refresh. On web, press **F5** or click the browser refresh button.
+      </Step>
+    </Steps>
+
+    <Tip>
+      If the item still doesn't appear after refreshing, check **Wardrobe → Archived** — you may have accidentally archived it instead of saving it to your main wardrobe.
+    </Tip>
+  </Accordion>
+
+  <Accordion title="Item photos appear blurry">
+    Blurry item photos are almost always caused by low-resolution source images. For the sharpest results, upload images that are at least **800 × 800 pixels**. Photos taken with a modern smartphone in good lighting will typically meet or exceed this threshold.
+
+    To replace a blurry photo, open the item, tap or click **Edit**, and upload a higher-resolution image.
+  </Accordion>
+</AccordionGroup>
+
+## Recommendations
+
+<AccordionGroup>
+  <Accordion title="I'm not getting any recommendations">
+    NineStyle requires a minimum amount of data before the recommendation engine activates. Make sure both of the following conditions are met:
+
+    - **At least 5 items** are in your wardrobe
+    - **Your style profile is complete** — go to **Profile → Style Settings** and fill in any incomplete sections
+
+    Once both conditions are satisfied, recommendations typically appear within a few minutes of your next app session.
+  </Accordion>
+
+  <Accordion title="Recommendations don't match my style">
+    The AI learns from your explicit feedback. If suggestions feel off, take these actions:
+
+    <Steps>
+      <Step title="Rate your outfit suggestions">
+        Open **Discover → Outfit Feed** and rate outfits using the thumbs-up or thumbs-down buttons. The more ratings you provide, the faster the AI calibrates to your taste.
+      </Step>
+      <Step title="Update your style profile">
+        Visit **Profile → Style Settings** and revisit your aesthetic, preferred colors, and fit preferences. Even small updates can noticeably shift your recommendations.
+      </Step>
+    </Steps>
+  </Accordion>
+
+  <Accordion title="Weather-based suggestions are wrong">
+    Weather-aware recommendations rely on your device's location services. If the weather data looks incorrect, check that NineStyle has permission to access your location:
+
+    - **iOS:** Go to **Settings → Privacy & Security → Location Services → NineStyle** and set it to **While Using the App** or **Always**.
+    - **Android:** Go to **Settings → Apps → NineStyle → Permissions → Location** and grant access.
+
+    After updating permissions, restart the app and check whether the weather data has corrected itself.
+  </Accordion>
+</AccordionGroup>
+
+## Integrations
+
+<AccordionGroup>
+  <Accordion title="My retailer connection keeps disconnecting">
+    Retailer connections can drop when the authorization token expires or the retailer refreshes its API credentials. To restore the connection, re-authorize it from within NineStyle:
+
+    <Steps>
+      <Step title="Open Connected Apps">
+        Go to **Settings → Connected Apps**.
+      </Step>
+      <Step title="Re-authorize the retailer">
+        Find the disconnected retailer in the list and click **Reconnect**. You'll be redirected to the retailer's login page to re-authorize access.
+      </Step>
+    </Steps>
+  </Accordion>
+
+  <Accordion title="Instagram posts aren't importing">
+    Instagram imports require explicit media permissions. If posts aren't appearing in NineStyle, follow these steps:
+
+    <Steps>
+      <Step title="Check media permissions on Instagram">
+        Open Instagram, go to **Settings → Apps and Websites**, find NineStyle, and confirm that media access is enabled.
+      </Step>
+      <Step title="Reconnect your Instagram account">
+        In NineStyle, go to **Settings → Connected Apps → Instagram**, disconnect the account, then reconnect it to issue a fresh authorization.
+      </Step>
+    </Steps>
+
+    <Note>
+      Instagram's API only surfaces posts you've made after granting permissions. Previously published posts will not be retroactively imported.
+    </Note>
+  </Accordion>
+
+  <Accordion title="Calendar sync isn't working">
+    Calendar sync issues vary by platform:
+
+    - **iOS:** Go to **Settings → Privacy & Security → Calendars → NineStyle** and make sure calendar access is enabled. Then return to NineStyle and trigger a manual sync from **Settings → Connected Apps → Calendar**.
+    - **Android:** Go to **Settings → Connected Apps → Google Calendar** within NineStyle, disconnect the integration, then re-authorize your Google account to issue a fresh OAuth token.
+
+    After reconnecting, allow up to 5 minutes for upcoming events to appear in your recommendation feed.
+  </Accordion>
+</AccordionGroup>
+
+## App Performance
+
+<AccordionGroup>
+  <Accordion title="The app is slow or crashing">
+    Sluggish performance or unexpected crashes are usually resolved by these two steps:
+
+    <Steps>
+      <Step title="Update to the latest version">
+        Open the App Store (iOS) or Google Play (Android) and install any available NineStyle updates. Performance fixes and stability improvements ship regularly.
+      </Step>
+      <Step title="Clear the app cache">
+        On **iOS**, delete and reinstall the app. On **Android**, go to **Settings → Apps → NineStyle → Storage → Clear Cache**, then relaunch the app.
+      </Step>
+    </Steps>
+  </Accordion>
+
+  <Accordion title="Pages aren't loading">
+    If screens are blank or content fails to load, check these things first:
+
+    1. **Verify your internet connection** — switch between Wi-Fi and mobile data to identify if one network is the problem.
+    2. **Refresh the page** — on web, press **F5**; on mobile, pull down to refresh.
+    3. **Log out and back in** — go to **Account → Sign Out**, then sign in again to re-establish your session.
+
+    <Tip>
+      If the issue affects only specific pages, it may be a temporary server-side problem. Check the [NineStyle Status Page](https://status.ninestyle.com) to see if there are any active incidents.
+    </Tip>
+  </Accordion>
+
+  <Accordion title="Notifications aren't arriving">
+    Missing notifications are almost always a device permissions issue. Check the following:
+
+    - **Device-level permissions:** On **iOS**, go to **Settings → Notifications → NineStyle** and enable notifications. On **Android**, go to **Settings → Apps → NineStyle → Notifications** and turn them on.
+    - **In-app notification settings:** Open NineStyle and go to **Settings → Notifications** to review which notification types are enabled. Make sure the alerts you want — such as outfit-of-the-day reminders and new recommendation alerts — are switched on.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Still need help?
+
+If you've worked through the relevant section above and are still experiencing an issue, our support team and community are here for you.
+
+<CardGroup cols={2}>
+  <Card title="Contact Support" icon="envelope" href="mailto:support@ninestyle.com">
+    Send us a message and our support team will get back to you as soon as possible.
+  </Card>
+  <Card title="NineStyle Community" icon="users" href="https://community.ninestyle.com">
+    Browse discussions, share tips, and get answers from fellow NineStyle users.
+  </Card>
+</CardGroup>

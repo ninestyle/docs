@@ -1,0 +1,337 @@
+---
+title: "Wardrobe Items API — Manage Clothing via REST"
+sidebarTitle: "Wardrobe"
+description: "REST endpoints to list, add, update, and delete clothing items in a NineStyle wardrobe. Supports filtering by category, color, brand, and season."
+---
+
+The Wardrobe Items API is the foundation of every NineStyle integration. A wardrobe item represents a single physical garment or accessory in a user's closet — a blue linen shirt, a pair of white sneakers, a leather belt. Each item carries metadata like category, color, brand, and season that powers filtering, outfit assembly, and AI recommendations. Use these endpoints to programmatically populate a wardrobe from an existing product catalog, sync items from a shopping app, or build a custom wardrobe management interface.
+
+---
+
+## GET /wardrobe/items
+
+Retrieve a paginated list of wardrobe items belonging to the authenticated user. Apply query parameters to filter the results to a specific category, color, or season.
+
+**Required scope:** `wardrobe:read`
+
+### Query Parameters
+
+<ParamField query="category" type="string">
+  Filter items to a specific clothing category. Accepted values: `tops`, `bottoms`, `shoes`, `accessories`, `outerwear`.
+</ParamField>
+
+<ParamField query="color" type="string">
+  Filter items by color. Pass a plain color name, e.g. `navy`, `white`, `olive`.
+</ParamField>
+
+<ParamField query="season" type="string">
+  Filter items by the season they're suited for. Accepted values: `spring`, `summer`, `autumn`, `winter`, `all`.
+</ParamField>
+
+<ParamField query="page" type="integer" default="1">
+  The page number to retrieve.
+</ParamField>
+
+<ParamField query="per_page" type="integer" default="20">
+  Number of items to return per page. Maximum `100`.
+</ParamField>
+
+### Response Fields
+
+<ResponseField name="id" type="string">
+  Unique identifier for the wardrobe item, prefixed `item_`.
+</ResponseField>
+
+<ResponseField name="name" type="string">
+  The display name of the item, e.g. `"Classic White Oxford"`.
+</ResponseField>
+
+<ResponseField name="category" type="string">
+  The clothing category: `tops`, `bottoms`, `shoes`, `accessories`, or `outerwear`.
+</ResponseField>
+
+<ResponseField name="color" type="string">
+  Primary color of the item as a plain color name.
+</ResponseField>
+
+<ResponseField name="brand" type="string">
+  Brand or manufacturer name. `null` if not provided.
+</ResponseField>
+
+<ResponseField name="season" type="string">
+  The season this item is suited for, or `"all"` for year-round items.
+</ResponseField>
+
+<ResponseField name="image_url" type="string">
+  URL of the item's cover photo hosted on the NineStyle CDN. `null` if no image has been uploaded.
+</ResponseField>
+
+<ResponseField name="created_at" type="string">
+  ISO 8601 timestamp of when the item was added to the wardrobe.
+</ResponseField>
+
+### Examples
+
+<CodeGroup>
+```bash curl
+curl --request GET \
+  --url "https://api.ninestyle.com/v1/wardrobe/items?category=tops&season=summer&per_page=5" \
+  --header "Authorization: Bearer YOUR_API_KEY"
+```
+
+```javascript JavaScript (fetch)
+const params = new URLSearchParams({
+  category: "tops",
+  season: "summer",
+  per_page: "5",
+});
+
+const response = await fetch(
+  `https://api.ninestyle.com/v1/wardrobe/items?${params}`,
+  {
+    headers: {
+      "Authorization": "Bearer YOUR_API_KEY",
+    },
+  }
+);
+
+const { data, meta } = await response.json();
+console.log(data, meta.pagination);
+```
+</CodeGroup>
+
+```json Example Response (200 OK)
+{
+  "data": [
+    {
+      "id": "item_01HXYZ111111",
+      "name": "Linen Shirt — Sky Blue",
+      "category": "tops",
+      "color": "sky blue",
+      "brand": "Uniqlo",
+      "season": "summer",
+      "image_url": "https://cdn.ninestyle.com/items/item_01HXYZ111111.jpg",
+      "created_at": "2024-05-01T14:03:22Z"
+    },
+    {
+      "id": "item_01HXYZ222222",
+      "name": "Striped Polo",
+      "category": "tops",
+      "color": "white",
+      "brand": "Ralph Lauren",
+      "season": "summer",
+      "image_url": "https://cdn.ninestyle.com/items/item_01HXYZ222222.jpg",
+      "created_at": "2024-05-03T09:17:55Z"
+    }
+  ],
+  "meta": {
+    "pagination": {
+      "total": 34,
+      "per_page": 5,
+      "current_page": 1,
+      "total_pages": 7,
+      "next_page": 2,
+      "prev_page": null
+    }
+  }
+}
+```
+
+---
+
+## POST /wardrobe/items
+
+Add a new item to the authenticated user's wardrobe. At minimum you must supply a `name` and `category`; all other fields are optional and can be updated later.
+
+**Required scope:** `wardrobe:write`
+
+### Body Parameters
+
+<ParamField body="name" type="string" required>
+  A display name for the item, e.g. `"Navy Chino Trousers"`.
+</ParamField>
+
+<ParamField body="category" type="string" required>
+  The clothing category. Must be one of: `tops`, `bottoms`, `shoes`, `accessories`, `outerwear`.
+</ParamField>
+
+<ParamField body="color" type="string">
+  Primary color of the item as a plain color name, e.g. `"charcoal"`.
+</ParamField>
+
+<ParamField body="brand" type="string">
+  Brand or manufacturer name.
+</ParamField>
+
+<ParamField body="season" type="string">
+  Season this item is suited for: `spring`, `summer`, `autumn`, `winter`, or `all`. Defaults to `all`.
+</ParamField>
+
+<ParamField body="image_url" type="string">
+  Publicly accessible URL of a photo of the item. NineStyle will fetch and proxy this image to the CDN.
+</ParamField>
+
+<ParamField body="notes" type="string">
+  Free-text notes about the item, e.g. care instructions or where it was purchased. Maximum 500 characters.
+</ParamField>
+
+### Examples
+
+<CodeGroup>
+```bash curl
+curl --request POST \
+  --url https://api.ninestyle.com/v1/wardrobe/items \
+  --header "Authorization: Bearer YOUR_API_KEY" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "name": "Navy Chino Trousers",
+    "category": "bottoms",
+    "color": "navy",
+    "brand": "J.Crew",
+    "season": "all",
+    "image_url": "https://example.com/images/navy-chinos.jpg",
+    "notes": "Slim fit, 32x30. Machine wash cold."
+  }'
+```
+
+```javascript JavaScript (fetch)
+const response = await fetch("https://api.ninestyle.com/v1/wardrobe/items", {
+  method: "POST",
+  headers: {
+    "Authorization": "Bearer YOUR_API_KEY",
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({
+    name: "Navy Chino Trousers",
+    category: "bottoms",
+    color: "navy",
+    brand: "J.Crew",
+    season: "all",
+    image_url: "https://example.com/images/navy-chinos.jpg",
+    notes: "Slim fit, 32x30. Machine wash cold.",
+  }),
+});
+
+const { data } = await response.json();
+console.log(data.id); // "item_01HXYZ333333"
+```
+</CodeGroup>
+
+```json Example Response (201 Created)
+{
+  "data": {
+    "id": "item_01HXYZ333333",
+    "name": "Navy Chino Trousers",
+    "category": "bottoms",
+    "color": "navy",
+    "brand": "J.Crew",
+    "season": "all",
+    "image_url": "https://cdn.ninestyle.com/items/item_01HXYZ333333.jpg",
+    "notes": "Slim fit, 32x30. Machine wash cold.",
+    "created_at": "2024-06-10T11:45:00Z"
+  },
+  "meta": {
+    "request_id": "req_4nRpQ7wXyZ01"
+  }
+}
+```
+
+---
+
+## PUT /wardrobe/items/:id
+
+Update an existing wardrobe item. All body fields are optional — supply only the fields you want to change. Fields not included in the request body remain unchanged.
+
+**Required scope:** `wardrobe:write`
+
+### Path Parameters
+
+<ParamField path="id" type="string" required>
+  The unique ID of the wardrobe item to update, e.g. `item_01HXYZ333333`.
+</ParamField>
+
+### Body Parameters
+
+All fields from `POST /wardrobe/items` are accepted and all are optional: `name`, `color`, `brand`, `season`, `image_url`, `notes`. `category` can also be updated.
+
+<CodeGroup>
+```bash curl
+curl --request PUT \
+  --url https://api.ninestyle.com/v1/wardrobe/items/item_01HXYZ333333 \
+  --header "Authorization: Bearer YOUR_API_KEY" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "color": "dark navy",
+    "notes": "Slim fit, 32x30. Dry clean only."
+  }'
+```
+
+```javascript JavaScript (fetch)
+const response = await fetch(
+  "https://api.ninestyle.com/v1/wardrobe/items/item_01HXYZ333333",
+  {
+    method: "PUT",
+    headers: {
+      "Authorization": "Bearer YOUR_API_KEY",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      color: "dark navy",
+      notes: "Slim fit, 32x30. Dry clean only.",
+    }),
+  }
+);
+
+const { data } = await response.json();
+```
+</CodeGroup>
+
+The response returns the full updated item object with HTTP `200 OK`.
+
+---
+
+## DELETE /wardrobe/items/:id
+
+Permanently delete a wardrobe item. Any outfits that reference the deleted item will have that item removed from their `items` array automatically.
+
+**Required scope:** `wardrobe:write`
+
+### Path Parameters
+
+<ParamField path="id" type="string" required>
+  The unique ID of the wardrobe item to delete.
+</ParamField>
+
+<Warning>
+  Deleting a wardrobe item is **permanent and irreversible**. There is no trash
+  or undo — once deleted, the item and its image are removed immediately. If
+  you only want to hide an item from recommendations without losing it, consider
+  updating its `notes` field as a soft marker instead.
+</Warning>
+
+A successful deletion returns **HTTP 204 No Content** with an empty response body.
+
+<CodeGroup>
+```bash curl
+curl --request DELETE \
+  --url https://api.ninestyle.com/v1/wardrobe/items/item_01HXYZ333333 \
+  --header "Authorization: Bearer YOUR_API_KEY"
+```
+
+```javascript JavaScript (fetch)
+const response = await fetch(
+  "https://api.ninestyle.com/v1/wardrobe/items/item_01HXYZ333333",
+  {
+    method: "DELETE",
+    headers: {
+      "Authorization": "Bearer YOUR_API_KEY",
+    },
+  }
+);
+
+// 204 No Content — response.body is empty
+if (response.status === 204) {
+  console.log("Item deleted successfully.");
+}
+```
+</CodeGroup>

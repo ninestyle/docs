@@ -1,30 +1,11 @@
 {
-  "$schema": "https://mintlify.com/docs.json",
+  "projectType": "saas",
+  "projectName": "NineStyle",
+  "projectDescription": "NineStyle is a personal styling and wardrobe management platform that helps users discover outfits, organize their wardrobe, and get personalized style recommendations.",
   "theme": "almond",
-  "name": "NineStyle",
-  "colors": {
-    "primary": "#1A1A2E",
-    "light": "#C9A96E",
-    "dark": "#0F0F1A"
-  },
-  "favicon": "/favicon.svg",
-  "logo": {
-    "light": "/logo/light.svg",
-    "dark": "/logo/dark.svg"
-  },
-  "navbar": {
-    "links": [
-      {
-        "label": "Support",
-        "href": "mailto:support@ninestyle.com"
-      }
-    ],
-    "primary": {
-      "type": "button",
-      "label": "Get Started",
-      "href": "https://app.ninestyle.com/signup"
-    }
-  },
+  "primaryColor": "#1A1A2E",
+  "lightColor": "#C9A96E",
+  "darkColor": "#0F0F1A",
   "navigation": {
     "tabs": [
       {
@@ -95,10 +76,22 @@
       }
     ]
   },
-  "footer": {
-    "socials": {
-      "x": "https://x.com/ninestyle",
-      "instagram": "https://instagram.com/ninestyle"
-    }
-  }
+  "keyFeatures": [
+    "Virtual wardrobe to catalog and organize clothing items",
+    "AI-powered outfit recommendations based on style preferences",
+    "Outfit builder with mix-and-match tools",
+    "Style profile customization",
+    "Shopping integrations to discover and save new pieces",
+    "Social sharing and style inspiration feeds",
+    "Multi-platform support (web, iOS, Android)"
+  ],
+  "publicApiSurface": [
+    "GET /wardrobe/items",
+    "POST /wardrobe/items",
+    "GET /outfits",
+    "POST /outfits",
+    "GET /recommendations",
+    "GET /users/profile",
+    "PUT /users/profile"
+  ]
 }

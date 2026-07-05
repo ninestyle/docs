@@ -1,0 +1,222 @@
+---
+title: "Users API — Read and Update User Profiles"
+sidebarTitle: "Users"
+description: "GET /users/me returns the authenticated user's profile. PUT /users/me updates display name, bio, style preferences, and notification settings."
+---
+
+The Users API gives your application access to the authenticated user's NineStyle profile and style preferences. The profile contains essential identity fields — display name, avatar, and subscription plan — alongside the style profile, a structured object that captures the user's aesthetic tastes, preferred colour palette, body shape, and budget range. The style profile is the primary input the AI uses when generating outfit recommendations, so keeping it accurate and up to date directly improves recommendation quality. All endpoints under `/users/me` operate on the identity established by the API key in the `Authorization` header.
+
+---
+
+## GET /users/me
+
+Return the full profile of the authenticated user, including their subscription plan and style preferences.
+
+**Required scope:** `profile:read`
+
+### Response Fields
+
+<ResponseField name="id" type="string">
+  Unique identifier for the user account, prefixed `user_`.
+</ResponseField>
+
+<ResponseField name="email" type="string">
+  The user's verified email address. This field is read-only via the API — see the note below.
+</ResponseField>
+
+<ResponseField name="display_name" type="string">
+  The user's chosen display name shown across the NineStyle platform.
+</ResponseField>
+
+<ResponseField name="avatar_url" type="string">
+  URL of the user's profile picture hosted on the NineStyle CDN. `null` if no avatar has been set.
+</ResponseField>
+
+<ResponseField name="bio" type="string">
+  Short free-text biography. Maximum 280 characters. `null` if not set.
+</ResponseField>
+
+<ResponseField name="plan" type="string">
+  The user's active subscription tier: `"free"` or `"pro"`.
+</ResponseField>
+
+<ResponseField name="style_profile" type="object">
+  The user's structured style preferences used by the AI recommendations engine.
+
+  <Expandable title="style_profile fields">
+    <ResponseField name="style_profile.aesthetics" type="array">
+      List of aesthetic labels the user identifies with, e.g. `["minimalist", "smart-casual", "streetwear"]`.
+    </ResponseField>
+    <ResponseField name="style_profile.colors" type="array">
+      List of preferred colour names the user gravitates toward, e.g. `["navy", "white", "olive", "tan"]`.
+    </ResponseField>
+    <ResponseField name="style_profile.body_shape" type="string">
+      The user's self-identified body shape used for fit recommendations. Common values: `"slim"`, `"athletic"`, `"regular"`, `"tall"`, `"petite"`. `null` if not set.
+    </ResponseField>
+    <ResponseField name="style_profile.budget_min" type="integer">
+      Minimum per-item budget in the user's account currency (minor units). `null` if not set.
+    </ResponseField>
+    <ResponseField name="style_profile.budget_max" type="integer">
+      Maximum per-item budget in the user's account currency (minor units). `null` if not set.
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+<ResponseField name="created_at" type="string">
+  ISO 8601 timestamp of when the account was created.
+</ResponseField>
+
+### Examples
+
+<CodeGroup>
+```bash curl
+curl --request GET \
+  --url https://api.ninestyle.com/v1/users/me \
+  --header "Authorization: Bearer YOUR_API_KEY"
+```
+
+```javascript JavaScript (fetch)
+const response = await fetch("https://api.ninestyle.com/v1/users/me", {
+  headers: { "Authorization": "Bearer YOUR_API_KEY" },
+});
+
+const { data } = await response.json();
+console.log(data.display_name, data.plan);
+```
+</CodeGroup>
+
+```json Example Response (200 OK)
+{
+  "data": {
+    "id": "user_01HUSR987654",
+    "email": "alex@example.com",
+    "display_name": "Alex Rivera",
+    "avatar_url": "https://cdn.ninestyle.com/avatars/user_01HUSR987654.jpg",
+    "bio": "Minimalist wardrobe enthusiast. Less is more.",
+    "plan": "pro",
+    "style_profile": {
+      "aesthetics": ["minimalist", "smart-casual"],
+      "colors": ["navy", "white", "olive", "tan", "grey"],
+      "body_shape": "athletic",
+      "budget_min": 3000,
+      "budget_max": 25000
+    },
+    "created_at": "2023-11-04T08:12:00Z"
+  },
+  "meta": {
+    "request_id": "req_1aAbB3cCdD07"
+  }
+}
+```
+
+---
+
+## PUT /users/me
+
+Update the authenticated user's profile fields. All fields are optional — include only the fields you want to change. Fields omitted from the request body are left unchanged.
+
+**Required scope:** `profile:write`
+
+### Body Parameters
+
+<ParamField body="display_name" type="string">
+  New display name for the user. Maximum 60 characters.
+</ParamField>
+
+<ParamField body="bio" type="string">
+  Short biography displayed on the user's public profile. Maximum 280 characters. Pass `null` to clear the bio.
+</ParamField>
+
+<ParamField body="avatar_url" type="string">
+  Publicly accessible URL of a new profile picture. NineStyle will fetch and proxy the image to the CDN.
+</ParamField>
+
+<ParamField body="style_profile.aesthetics" type="array">
+  Replace the user's aesthetic label list with a new array of strings, e.g. `["minimalist", "techwear"]`. Pass an empty array to clear all aesthetics.
+</ParamField>
+
+<ParamField body="style_profile.colors" type="array">
+  Replace the user's preferred colour list with a new array of plain colour name strings. Pass an empty array to clear all colour preferences.
+</ParamField>
+
+<ParamField body="style_profile.budget_min" type="integer">
+  Minimum per-item budget in the user's account currency (minor units, e.g. cents). Pass `null` to clear.
+</ParamField>
+
+<ParamField body="style_profile.budget_max" type="integer">
+  Maximum per-item budget in the user's account currency (minor units). Must be greater than or equal to `budget_min` if both are set. Pass `null` to clear.
+</ParamField>
+
+<CodeGroup>
+```bash curl
+curl --request PUT \
+  --url https://api.ninestyle.com/v1/users/me \
+  --header "Authorization: Bearer YOUR_API_KEY" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "display_name": "Alex R.",
+    "bio": "Building a capsule wardrobe, one piece at a time.",
+    "style_profile": {
+      "aesthetics": ["minimalist", "smart-casual", "business"],
+      "colors": ["navy", "white", "charcoal", "tan"],
+      "budget_min": 5000,
+      "budget_max": 30000
+    }
+  }'
+```
+
+```javascript JavaScript (fetch)
+const response = await fetch("https://api.ninestyle.com/v1/users/me", {
+  method: "PUT",
+  headers: {
+    "Authorization": "Bearer YOUR_API_KEY",
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({
+    display_name: "Alex R.",
+    bio: "Building a capsule wardrobe, one piece at a time.",
+    style_profile: {
+      aesthetics: ["minimalist", "smart-casual", "business"],
+      colors: ["navy", "white", "charcoal", "tan"],
+      budget_min: 5000,
+      budget_max: 30000,
+    },
+  }),
+});
+
+const { data } = await response.json();
+console.log(data.display_name); // "Alex R."
+```
+</CodeGroup>
+
+```json Example Response (200 OK)
+{
+  "data": {
+    "id": "user_01HUSR987654",
+    "email": "alex@example.com",
+    "display_name": "Alex R.",
+    "avatar_url": "https://cdn.ninestyle.com/avatars/user_01HUSR987654.jpg",
+    "bio": "Building a capsule wardrobe, one piece at a time.",
+    "plan": "pro",
+    "style_profile": {
+      "aesthetics": ["minimalist", "smart-casual", "business"],
+      "colors": ["navy", "white", "charcoal", "tan"],
+      "body_shape": "athletic",
+      "budget_min": 5000,
+      "budget_max": 30000
+    },
+    "created_at": "2023-11-04T08:12:00Z"
+  },
+  "meta": {
+    "request_id": "req_8hHiI0jJkK11"
+  }
+}
+```
+
+<Note>
+  The `email` field cannot be changed through the API. To update the email
+  address on a NineStyle account, the user must visit **Account Settings →
+  Email Address** in the NineStyle web app and verify the new address. This
+  requirement protects account security and ensures email ownership is always
+  confirmed by the account holder.
+</Note>
