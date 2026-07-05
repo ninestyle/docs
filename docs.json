@@ -31,5 +31,11 @@
       "x": "https://x.com/ninestyle"
     }
   },
-  "description": "Creative studio developing and managing diverse online and offline brands."
+  "description": "Creative studio developing and managing diverse online and offline brands.",
+  "fonts": {
+    "heading": {
+      "family": "Source Sans Pro",
+      "weight": 400
+    }
+  }
 }
