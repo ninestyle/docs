@@ -1,5 +1,5 @@
 ---
-title: "Authenticate NineStyle API Requests with API Keys"
+title: "Authenticate Your NineStyle API Requests Using API Keys"
 sidebarTitle: "Authentication"
 description: "NineStyle API uses Bearer token authentication. Generate an API key from your dashboard and pass it in the Authorization header on every request."
 ---
@@ -22,10 +22,10 @@ The NineStyle API authenticates every request using API keys transmitted as Bear
     Click **API Keys** under the Developer section to open the key management page.
   </Step>
   <Step title="Create a new key">
-    Click **New API Key**. Select the scopes your integration requires (see [API Key Scopes](#api-key-scopes) below) and click **Create**.
+    Click **New API Key**. Give the key a descriptive name — for example, `Mobile App – Production` or `Analytics Dashboard` — so you can identify it later in the dashboard.
   </Step>
-  <Step title="Name your key">
-    Give the key a descriptive name — for example, `Mobile App – Production` or `Analytics Dashboard` — so you can identify it later in the dashboard.
+  <Step title="Choose scopes">
+    Select the scopes your integration requires (see [API Key Scopes](#api-key-scopes) below), then click **Create**.
   </Step>
   <Step title="Copy the key immediately">
     Your full API key is displayed once. Copy it to a secure secrets manager or environment variable right now.

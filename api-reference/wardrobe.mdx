@@ -1,5 +1,5 @@
 ---
-title: "Wardrobe Items API — Manage Clothing via REST"
+title: "Wardrobe Items API — List and Add Clothing via REST"
 sidebarTitle: "Wardrobe"
 description: "REST endpoints to list, add, update, and delete clothing items in a NineStyle wardrobe. Supports filtering by category, color, brand, and season."
 ---
@@ -174,6 +174,44 @@ Add a new item to the authenticated user's wardrobe. At minimum you must supply 
 <ParamField body="notes" type="string">
   Free-text notes about the item, e.g. care instructions or where it was purchased. Maximum 500 characters.
 </ParamField>
+
+### Response Fields
+
+<ResponseField name="id" type="string">
+  Unique identifier for the newly created wardrobe item, prefixed `item_`.
+</ResponseField>
+
+<ResponseField name="name" type="string">
+  The display name supplied in the request body.
+</ResponseField>
+
+<ResponseField name="category" type="string">
+  The clothing category supplied in the request body.
+</ResponseField>
+
+<ResponseField name="color" type="string">
+  Primary color of the item. `null` if not provided.
+</ResponseField>
+
+<ResponseField name="brand" type="string">
+  Brand or manufacturer name. `null` if not provided.
+</ResponseField>
+
+<ResponseField name="season" type="string">
+  The season this item is suited for. Defaults to `"all"` if not provided.
+</ResponseField>
+
+<ResponseField name="image_url" type="string">
+  CDN URL of the item's cover photo after NineStyle has fetched and proxied the source image. `null` if no `image_url` was supplied.
+</ResponseField>
+
+<ResponseField name="notes" type="string">
+  Free-text notes supplied in the request body. `null` if not provided.
+</ResponseField>
+
+<ResponseField name="created_at" type="string">
+  ISO 8601 timestamp of when the item was added to the wardrobe.
+</ResponseField>
 
 ### Examples
 

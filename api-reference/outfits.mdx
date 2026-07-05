@@ -1,5 +1,5 @@
 ---
-title: "Outfits API — Create and Retrieve Saved Outfits"
+title: "Outfits API — Create, Retrieve, and Delete Saved Outfits"
 sidebarTitle: "Outfits"
 description: "REST endpoints to list, create, update, and delete outfits. An outfit is a named collection of wardrobe item IDs assembled into a wearable look."
 ---
@@ -221,6 +221,40 @@ Create a new outfit by naming it and providing an array of wardrobe item IDs. Al
 <ParamField body="public" type="boolean" default="false">
   Set to `true` to publish the outfit to the NineStyle public style feed.
 </ParamField>
+
+### Response Fields
+
+<ResponseField name="id" type="string">
+  Unique identifier for the newly created outfit, prefixed `outfit_`.
+</ResponseField>
+
+<ResponseField name="name" type="string">
+  The display name supplied in the request body.
+</ResponseField>
+
+<ResponseField name="items" type="array">
+  Array of wardrobe item ID strings included in the outfit, matching the IDs supplied in the request.
+</ResponseField>
+
+<ResponseField name="image_url" type="string">
+  Cover photo URL for the outfit. `null` until an image is explicitly set via a subsequent update.
+</ResponseField>
+
+<ResponseField name="occasion" type="string">
+  Occasion tag supplied in the request body. `null` if not provided.
+</ResponseField>
+
+<ResponseField name="rating" type="integer">
+  Self-rated score from `1` to `5` supplied in the request body. `null` if not provided.
+</ResponseField>
+
+<ResponseField name="public" type="boolean">
+  Whether the outfit is visible on the NineStyle public style feed. Reflects the value supplied in the request, defaulting to `false`.
+</ResponseField>
+
+<ResponseField name="created_at" type="string">
+  ISO 8601 timestamp of when the outfit was created.
+</ResponseField>
 
 <CodeGroup>
 ```bash curl
