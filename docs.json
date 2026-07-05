@@ -1,16 +1,11 @@
 {
   "$schema": "https://mintlify.com/docs.json",
   "theme": "almond",
-  "name": "NineStyle",
+  "name": "Nine Style",
   "colors": {
     "primary": "#1A1A2E",
     "light": "#C9A96E",
     "dark": "#0F0F1A"
-  },
-  "favicon": "/favicon.svg",
-  "logo": {
-    "light": "/logo/light.svg",
-    "dark": "/logo/dark.svg"
   },
   "navbar": {
     "links": [
@@ -41,5 +36,6 @@
       "x": "https://x.com/ninestyle",
       "instagram": "https://instagram.com/ninestyle"
     }
-  }
+  },
+  "description": "Creative studio developing and managing diverse online and offline brands."
 }
